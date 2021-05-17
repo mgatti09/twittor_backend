@@ -24,7 +24,7 @@ var MongoCN = ConnBD()
 
 /*ConnBD función que conecta a la BD  */
 func ConnBD() *mongo.Client {
-	uri := "mongodb+srv://user:pass@mongodb.net/test?w=majority"
+	uri := "mongodb+srv://dbTwittorUser:dbTwittorUser1234@twittor.7klpv.mongodb.net/test?w=majority"
 	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(uri))
 	if err != nil {
 		log.Fatal("Could not connect to MongoDB\n" + err.Error())

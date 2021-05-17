@@ -11,12 +11,16 @@ import (
 	"os"
 
 	"github.com/gorilla/mux"
+	"github.com/mgatti09/twittor_backend/middlewares"
+	"github.com/mgatti09/twittor_backend/routers"
 	"github.com/rs/cors" //permisos que le doy a mi API para que sea accesible desde cualquier lugar o limitar el acceso
 )
 
 /*Handlers() seteo del puerto, el handler y pongo a escuchar al servidor */
 func Handlers() {
 	router := mux.NewRouter()
+
+	router.HandleFunc("/register", middlewares.CheckBD(routers.SignUp)).Methods("POST")
 
 	PORT := os.Getenv("PORT")
 	if PORT == "" {
