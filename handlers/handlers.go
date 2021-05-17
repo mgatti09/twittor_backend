@@ -20,7 +20,7 @@ import (
 func Handlers() {
 	router := mux.NewRouter()
 
-	router.HandleFunc("/register", middlewares.CheckBD(routers.SignUp)).Methods("POST")
+	router.HandleFunc("/singup", middlewares.CheckBD(routers.SignUp)).Methods("POST")
 
 	PORT := os.Getenv("PORT")
 	if PORT == "" {
