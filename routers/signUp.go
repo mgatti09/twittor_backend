@@ -16,7 +16,7 @@ func SignUp(w http.ResponseWriter, r *http.Request) {
 	//.Decode(&t) con esta instrucción llenamos la data en la var t models.User
 	err := json.NewDecoder(r.Body).Decode(&t)
 	if err != nil {
-		http.Error(w, "There was a problem with the data received "+err.Error(), 400)
+		http.Error(w, "There was a problem with the data received: "+err.Error(), 400)
 		return
 	}
 
