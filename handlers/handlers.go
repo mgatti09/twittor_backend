@@ -22,7 +22,7 @@ func Handlers() {
 
 	router.HandleFunc("/singup", middlewares.CheckBD(routers.SignUp)).Methods("POST")
 	router.HandleFunc("/login", middlewares.CheckBD(routers.Login)).Methods("POST")
-	router.HandleFunc("/profile", middlewares.CheckBD(middlewares.CheckJWT(routers.ViewProfile))).Methods("GET")
+	router.HandleFunc("/viewprofile", middlewares.CheckBD(middlewares.CheckJWT(routers.ViewProfile))).Methods("GET")
 
 	PORT := os.Getenv("PORT")
 	if PORT == "" {
