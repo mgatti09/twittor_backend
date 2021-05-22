@@ -2,6 +2,7 @@ package bd
 
 import (
 	"context"
+	"log"
 	"time"
 
 	"github.com/mgatti09/twittor_backend/models"
@@ -33,24 +34,28 @@ func GetTweetsIFollow(ID string, page int64) ([]models.TweetsIFollow, bool) {
 		"$lookup": bson.M{
 			"from":         "tweets",
 			"localField":   "UserFollowingID",
-			"foreingField": "userid",
-			"as":           "tweets",
+			"foreignField": "userid",
+			"as":           "tweet",
 		}})
 	//$unwind para evitar que la info de la union venga en maestro detalle
-	conditions = append(conditions, bson.M{"$unwind": "$tweets"})
+	conditions = append(conditions, bson.M{"$unwind": "$tweet"})
 	//$sort ordenando por campo fecha descendente
-	conditions = append(conditions, bson.M{"$sort": bson.M{"tweets.date": -1}})
+	conditions = append(conditions, bson.M{"$sort": bson.M{"tweet.date": -1}})
 	//$skip ignorando registro de acuerdo a la variable  skip
 	conditions = append(conditions, bson.M{"$skip": skip})
 	//$limit limitando a 20 tweets por pagina
 	conditions = append(conditions, bson.M{"$limit": tweetsPerPage})
 
-	cursor, _ := coll.Aggregate(ctx, conditions)
 	var result []models.TweetsIFollow
+	cursor, err := coll.Aggregate(ctx, conditions)
+	if err != nil {
+		log.Println("coll.Aggregate" + err.Error())
+		return result, false
+	}
 
 	//Ejecutando todo el cursor para que arme todo el documento. esto se hace con All
 	//basando en la estructura TweetsIFollow
-	err := cursor.All(ctx, &result)
+	err = cursor.All(ctx, &result)
 	if err != nil {
 		return result, false
 	}

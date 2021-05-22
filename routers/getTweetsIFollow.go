@@ -19,7 +19,7 @@ func GetTweetsIFollow(w http.ResponseWriter, r *http.Request) {
 
 	response, statusOk := bd.GetTweetsIFollow(UserID, page)
 	if !statusOk {
-		http.Error(w, "Error reading tweets", http.StatusUnprocessableEntity)
+		http.Error(w, "Error reading tweets", http.StatusBadRequest)
 		return
 	}
 
