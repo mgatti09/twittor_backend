@@ -26,6 +26,20 @@ func Handlers() {
 	router.HandleFunc("/updateprofile", middlewares.CheckBD(middlewares.CheckJWT(routers.UpdateProfile))).Methods("PUT")
 	router.HandleFunc("/tweet", middlewares.CheckBD(middlewares.CheckJWT(routers.InsertTweet))).Methods("POST")
 	router.HandleFunc("/tweets", middlewares.CheckBD(middlewares.CheckJWT(routers.GetTweets))).Methods("GET")
+	router.HandleFunc("/tweet", middlewares.CheckBD(middlewares.CheckJWT(routers.DeleteTweet))).Methods("DELETE")
+
+	router.HandleFunc("/avatar", middlewares.CheckBD(middlewares.CheckJWT(routers.UploadAvatar))).Methods("POST")
+	router.HandleFunc("/avatar", middlewares.CheckBD(routers.GetAvatar)).Methods("GET")
+	router.HandleFunc("/banner", middlewares.CheckBD(middlewares.CheckJWT(routers.UploadBanner))).Methods("POST")
+	router.HandleFunc("/banner", middlewares.CheckBD(routers.GetBanner)).Methods("GET")
+
+	router.HandleFunc("/follow", middlewares.CheckBD(middlewares.CheckJWT(routers.FollowUser))).Methods("POST")
+	router.HandleFunc("/follow", middlewares.CheckBD(middlewares.CheckJWT(routers.UnfollowUser))).Methods("DELETE")
+	router.HandleFunc("/follow", middlewares.CheckBD(middlewares.CheckJWT(routers.FollowingUser))).Methods("GET")
+
+	router.HandleFunc("/listUsers", middlewares.CheckBD(middlewares.CheckJWT(routers.GetListUsers))).Methods("GET")
+
+	router.HandleFunc("/tweetsIFollow", middlewares.CheckBD(middlewares.CheckJWT(routers.GetTweetsIFollow))).Methods("GET")
 
 	PORT := os.Getenv("PORT")
 	if PORT == "" {
